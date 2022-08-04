@@ -8,6 +8,14 @@
 @import '@mdi/font/css/materialdesignicons.css';
 @import "vuetify/dist/vuetify.min.css";
 
-.pointer{
+.pointer {
     cursor: pointer;
+}
+
+.main {
+    background-color: #2f4050;
+}
+
+.relative-position {
+    position: relative;
 }

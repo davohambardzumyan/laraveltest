@@ -1,8 +1,8 @@
 import auth from "./auth";
-import other from "./other";
 import profile from "./profile";
 import httpCodesRoutes from "./http-codes-routes";
 import ticket from "./ticket";
+import staticPages from "./static-pages";
 
 function merge(routesList) {
     const allRoutes=[];
@@ -18,6 +18,6 @@ export default merge([
     auth,
     profile,
     ticket,
-    other,
     httpCodesRoutes,
+    staticPages
 ]);

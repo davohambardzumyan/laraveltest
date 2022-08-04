@@ -16,10 +16,13 @@ class TicketController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $tickets = Ticket::createdByAuthUser()->with('creator')->with('users')->get();
-            return TicketResource::collection($tickets);
         } else {
-            dd(2);
+            $tickets = Ticket::whereHas('users', function ($query) {
+                return $query->where('users.id', auth()->id());
+            })->with('creator')->with('users')->get();
         }
+
+        return TicketResource::collection($tickets);
     }
 
     public function getAllUsers()
@@ -36,9 +39,9 @@ class TicketController extends Controller
         $ticket->users()->attach($users);
 
         foreach ($users as $key => $user) {
-            Mail::to($user->email)->send(new TicketMail($user,request()->input('subject'),request()->input('content')));
+            Mail::to($user->email)->send(new TicketMail($user, request()->input('subject'), request()->input('content')));
         }
 
-        return true;
+        return response()->json($ticket);
     }
 }

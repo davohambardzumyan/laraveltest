@@ -57,7 +57,6 @@
 
 <script>
 import auth from "../../repository/auth";
-import store from "../../store";
 
 export default {
     name: "DashboardLayout",
@@ -69,9 +68,8 @@ export default {
     data: () => ({
         drawer: null,
         items: [
-            {title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/page-1'},
-            {title: 'My Profile', icon: 'mdi-account', to: '/profile'},
             {title: 'Tickets', icon: 'mdi-ticket', to: '/tickets'},
+            {title: 'My Profile', icon: 'mdi-account', to: '/profile'},
         ]
     }),
     methods: {
@@ -87,7 +85,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

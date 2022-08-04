@@ -12,7 +12,9 @@
                     cols="12"
                     md="6"
                 >
-                    <v-btn @click="showCreateDialog=!showCreateDialog" class="float-end">Create</v-btn>
+                    <v-btn v-if="$store.getters.isAdmin" @click="showCreateDialog=!showCreateDialog" class="float-end">
+                        Create
+                    </v-btn>
                 </v-col>
             </v-row>
         </v-card>
@@ -124,7 +126,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

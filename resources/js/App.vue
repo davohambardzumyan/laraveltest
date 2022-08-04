@@ -7,11 +7,9 @@
 
 <script>
 import VLoader from "./components/VLoader";
-import NavBar from "./components/NavBar";
 
 export default {
     name: "App",
-    components: {NavBar, VLoader},
+    components: {VLoader},
 }
 </script>
-

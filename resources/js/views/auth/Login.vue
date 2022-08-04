@@ -32,7 +32,7 @@ export default {
             this.startLoading()
             await auth.login(formData).then(async (data) => {
                 this.$store.dispatch('login', data.user).then(() => {
-                    this.$router.push({name: 'Dashboard'})
+                    this.$router.push({name: 'Tickets'})
                 })
             }).catch((error) => {
                 this.$toast.error(error.response?.data.message ?? 'Something went wrong.');

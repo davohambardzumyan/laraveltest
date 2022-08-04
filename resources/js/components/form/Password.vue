@@ -5,7 +5,7 @@
         :rules="rules"
         :error-messages="errorMessages"
         @input="$emit('input', $event)"
-        :append-icon="inputType ? 'fa-eye fa-2x' : 'fa-eye-slash'"
+        :append-icon="inputType ? 'mdi-eye' : 'mdi-eye-off'"
         :type="inputType ? 'password' : 'text'"
         @click:append="changeInputType"
     ></v-text-field>
