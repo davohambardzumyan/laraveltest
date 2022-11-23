@@ -19,9 +19,11 @@ use Illuminate\Support\Facades\Route;
 /*
  * AUTH ROUTES
  */
+
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
 Route::group(['prefix' => 'tickets', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/', [TicketController::class, 'index']);
     Route::get('/get-all-users', [TicketController::class, 'getAllUsers']);
-    Route::post('/create', [TicketController::class, 'create']);
+    Route::post('/create', [TicketController::class, 'store']);
 });

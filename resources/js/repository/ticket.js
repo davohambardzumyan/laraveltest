@@ -12,7 +12,7 @@ class TicketRepository {
     }
 
     async create(data) {
-        return (await axios.post('/tickets/create', data)).data
+        return (await axios.post('/tickets/store', data)).data
     }
 }
 

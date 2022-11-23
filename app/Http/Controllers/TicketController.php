@@ -2,46 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRole;
 use App\Http\Requests\TicketCreateRequest;
-use App\Http\Resources\TicketResource;
-use App\Mail\TicketMail;
-use App\Models\Ticket;
-use App\Models\User;
-use Illuminate\Support\Facades\Mail;
+use App\Services\TicketService;
+use App\Services\UserService;
 
 class TicketController extends Controller
 {
-    public function index()
+    /**
+     * Get tickets
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        if (auth()->user()->isAdmin()) {
-            $tickets = Ticket::createdByAuthUser()->with('creator')->with('users')->get();
-        } else {
-            $tickets = Ticket::whereHas('users', function ($query) {
-                return $query->where('users.id', auth()->id());
-            })->with('creator')->with('users')->get();
-        }
+        $ticketService = new TicketService();
 
-        return TicketResource::collection($tickets);
+        return $ticketService->index();
     }
 
-    public function getAllUsers()
+    /**
+     * Get user list with roles
+     *
+     * @return mixed
+     */
+    public function getAllUsers(): mixed
     {
-        return User::where('role', UserRole::USER)->get();
+        $userService = new UserService();
+
+        return response()->json($userService->getAllUsers());
     }
 
-    public function create(TicketCreateRequest $request)
+    /**
+     * Store new ticket
+     *
+     * @param TicketCreateRequest $request
+     * @param TicketService $ticketService
+     * @return mixed
+     */
+    public function store(TicketCreateRequest $request, TicketService $ticketService): mixed
     {
-        $ticket = Ticket::create(array_merge($request->only((new Ticket())->getFillable()), ['creator_id' => auth()->id()]));
-
-        $users = User::find($request->users);
-
-        $ticket->users()->attach($users);
-
-        foreach ($users as $key => $user) {
-            Mail::to($user->email)->send(new TicketMail($user, request()->input('subject'), request()->input('content')));
-        }
-
-        return response()->json($ticket);
+        return $ticketService->store($request);
     }
 }
